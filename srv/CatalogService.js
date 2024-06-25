@@ -39,5 +39,10 @@ module.exports = cds.service.impl( async function () {
         } catch (error) {
             return "Error " + error.toString(); 
         }
-    })
+    });
+
+    this.on('setOrderStatus', async req => {
+        console.log("Set Over All Status at Order Creation" );
+        return { OVERALL_STATUS: 'N'};
+    });
 });

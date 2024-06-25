@@ -1,8 +1,8 @@
 
 using { anubhav.db.master, anubhav.db.transaction  } from '../db/datamodel';
-using { anubhav.cds.CDSViews } from '../db/CDSViews';
+//using { anubhav.cds.CDSViews } from '../db/CDSViews';
 
-
+    
 
 service CatalogService @(path:'CatalogService') {
 
@@ -12,8 +12,10 @@ entity BusinessPartnerSet as projection on master.businesspartner;
 entity ProductSet as projection on master.product;
 entity AddressSet as projection on master.address;
 entity PurchaseOrderItemsSet as projection on transaction.poitems;
+function setOrderStatus() returns POsSet;
 entity POsSet @(
-    odata.draft.enabled: true
+    odata.draft.enabled: true,
+    Common.DefaultValuesFunction: 'setOrderStatus'
 ) as projection on transaction.purchaseorder {
     CASE OVERALL_STATUS
     WHEN 'A' THEN 'Approved'
@@ -26,7 +28,7 @@ entity POsSet @(
     WHEN 'D' THEN 1
     WHEN 'P' THEN 2
     WHEN 'X' THEN 2
-    WHEN 'N' THEN 0 END AS colorCode: Integer,    
+    WHEN 'N' THEN 1 END AS colorCode: Integer,    
     *,
     Items
 } actions {
@@ -34,8 +36,12 @@ entity POsSet @(
     @Common.SideEffects : { TargetProperties : [
         '_fk/GROSS_AMOUNT',
     ] }
+
     action boost();
     function largestOrder() returns array of POsSet;
+
 };
+
+
 //entity CProductValuesViewSet as projection on CDSViews.CProductValuesView;
 }

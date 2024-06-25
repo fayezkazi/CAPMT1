@@ -1,6 +1,6 @@
 using CatalogService as service from '../../srv/CatalogService';
 
-annotate CatalogService.POsSet with @(
+annotate service.POsSet with @(
 
 UI : {
     SelectionFields           : [
@@ -21,8 +21,8 @@ UI : {
         },
         {
             $Type                     : 'UI.DataField',
-            Value                     : OVERALL_STATUS,
-            Criticality               : #Critical,
+            Value                     : overallStat,
+            Criticality               : colorCode,
             CriticalityRepresentation : #WithIcon
         },
         {
@@ -126,7 +126,7 @@ UI : {
 
             {
                 $Type : 'UI.DataField',
-                Value : LIFECYCLE_STATUS
+                Value : OVERALL_STATUS
             }
         ]
     },
@@ -207,7 +207,7 @@ annotate CatalogService.PurchaseOrderItemsSet with @(
             TypeNamePlural : 'Items',
             Title:{
                 $Type: 'UI.DataField',
-                Value : NODE_KEY,
+                Value : ID,
             },
             Description:{
                 $Type : 'UI.DataField',
