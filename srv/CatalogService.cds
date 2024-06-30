@@ -4,9 +4,12 @@ using { anubhav.db.master, anubhav.db.transaction  } from '../db/datamodel';
 
     
 
-service CatalogService @(path:'CatalogService') {
+service CatalogService @(path:'CatalogService', requires: 'authenticated-user') {
 
-entity EmployeeSet as projection on master.employees;
+entity EmployeeSet @(restrict: [
+    { grant: ['WRITE'], to :Admin },
+    { grant: ['READ'], to :Viewer, where: 'bankName = $user.bankName' }
+]) as projection on master.employees;
 @Capabilities:{ Insertable,Updatable,Deletable:false}
 entity BusinessPartnerSet as projection on master.businesspartner;
 entity ProductSet as projection on master.product;

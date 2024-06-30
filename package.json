@@ -8,10 +8,13 @@
   "dependencies": {
     "@sap/cds": "^7",
     "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
-    "express": "^4"
+    "express": "^4",
+    "@sap/cds-hana": "^2",
+    "@sap/xssec": "^3"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7",
     "@sap/eslint-plugin-cds": "^3",
     "@sap/ux-specification": "^1.120.13",
     "eslint": "^9"
@@ -22,5 +25,11 @@
   },
   "sapux": [
     "app/purchaseorderapps"
-  ]
+  ],
+  "cds": {
+    "requires": {
+      "db": "hana",
+      "auth": "xsuaa"
+    }
+  }
 }
